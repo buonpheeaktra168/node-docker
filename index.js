@@ -26,7 +26,7 @@ app.get(`${path}/schools/list/:id`, (req, res) => {
   try {
     const id = req.params.id;
     console.log(req.params);
-    pool.query("SELECT * FROM schools WHERE id = $1", [id], (error, results) => {
+    pool.query("SELECT * FROM schools WHERE id = $1", [id], (error, data) => {
       if(error) throw error;
       res.send(data.rows);
     });
@@ -51,7 +51,7 @@ app.delete(`${path}/schools/delete/:id`, jsonParser, (req, res) => {
   try {
     const id = req.params.id;
     console.log(req.params);
-    pool.query("DELETE FROM schools WHERE id=$1", [id], (error, results) => {
+    pool.query("DELETE FROM schools WHERE id=$1", [id], (error, data) => {
       if (error) {
         throw error;
       }
@@ -62,7 +62,7 @@ app.delete(`${path}/schools/delete/:id`, jsonParser, (req, res) => {
   }
 });
 
-app.put(`${path}/schools/list:id`, jsonParser, async (req, res) => {
+app.put(`${path}/schools/list/:id`, jsonParser, async (req, res) => {
   try {
     console.log(req.params);
     const id = req.params.id;
@@ -71,7 +71,7 @@ app.put(`${path}/schools/list:id`, jsonParser, async (req, res) => {
         if (error) {
           throw error;
         } else {
-          console.log(res)
+          console.log(data)
           res.status(200).send(`${name} is updated successfully.`);
         }
       }
